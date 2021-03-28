@@ -17,10 +17,15 @@ pipeline {
         {
             steps{
                 sh 'docker build . --tag=rahul14m93/devops_capstone_nd'
-                sh 'echo "$MY_DOCKER_PASS" | docker login --username rahul14m93 --password-stdin'
-                sh 'docker push rahul14m93/devops_capstone_nd:latest'
-                
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+                    sh '''
+                        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                        docker push rahul14m93/devops_capstone_nd:latest
+                    '''
+                }
             }
+
+            
         }
     }
 
