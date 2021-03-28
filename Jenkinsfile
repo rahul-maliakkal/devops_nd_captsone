@@ -17,7 +17,7 @@ pipeline {
         {
             steps{
                 sh 'docker build . --tag=rahul14m93/devops_capstone_nd'
-                sh 'docker login'
+                sh 'echo "$MY_DOCKER_PASS" | docker login --username rahul14m93 --password-stdin'
                 sh 'docker push rahul14m93/devops_capstone_nd:latest'
                 
             }
