@@ -9,7 +9,7 @@ pipeline {
 
         stage("Lint Dockerfile") {
 			steps {
-      		              sh 'sudo /bin/hadolint Dockerfile'
+      		    sh 'sudo /bin/hadolint Dockerfile'
 			}
 		} 
         
@@ -18,11 +18,10 @@ pipeline {
 			steps{
 				sh 'docker build . --tag=rahul14m93/capstone'
 				
-					sh 'docker push rahul14m93/capstone:latest'
-				}
+				sh 'docker push rahul14m93/capstone:latest'
+				
 			}
 		}
+     }
 
-
-  }
 }
