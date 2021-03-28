@@ -30,7 +30,7 @@ pipeline {
 
          stage('Deploy to AWS Kubernetes Cluster') {
                   steps {
-                  withAWS(region:'ap-south-1', credentials:'aws-static') {
+                  withAWS(region:'ap-south-1', credentials:'eks_access') {
                   sh "aws eks --region ap-south-1 update-kubeconfig --name devops-nd-captsone"
                   sh "kubectl apply -f deployment.yml"
                   sh "kubectl get nodes"
