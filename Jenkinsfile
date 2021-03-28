@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
                 steps {
-                    sh 'echo Testing 1,2,3.....'
+                    sh 'echo Testing ....'
                 }
             }
 
@@ -30,15 +30,14 @@ pipeline {
 
          stage('Deploy to AWS Kubernetes Cluster') {
                   steps {
-                  withAWS(region:'ap-south-1', credentials:'eks_access') {
-                  sh "aws eks --region ap-south-1 update-kubeconfig --name devops-nd-captsone"
-                  sh "kubectl apply -f deployment.yml"
-                  sh "kubectl get nodes"
-                  sh "kubectl get deployment"
-                  sh "kubectl get pod -o wide"
-                  sh "kubectl apply -f services.yml"
-                  sh "kubectl get services"
-                    
+                    withAWS(region:'ap-south-1', credentials:'eks_access') {
+                        sh "aws eks --region ap-south-1 update-kubeconfig --name devops-nd-captsone"
+                        sh "kubectl apply -f deployment.yml"
+                        sh "kubectl get nodes"
+                        sh "kubectl get deployment"
+                        sh "kubectl get pod -o wide"
+                        sh "kubectl apply -f services.yml"
+                        sh "kubectl get services"
                   }
               }
          }
