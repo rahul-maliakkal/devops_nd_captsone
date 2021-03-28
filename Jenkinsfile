@@ -9,7 +9,7 @@ pipeline {
 
         stage("Lint Dockerfile") {
             steps {
-                sh 'sudo /bin/hadolint Dockerfile'
+                sh '/bin/hadolint Dockerfile'
             }
         } 
 
