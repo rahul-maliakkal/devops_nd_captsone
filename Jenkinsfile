@@ -27,6 +27,21 @@ pipeline {
 
             
         }
+
+         stage('Deploy to AWS Kubernetes Cluster') {
+                  steps {
+                  withAWS(region:'ap-south-1',credentials:'aws-creds') {
+                  sh "aws eks --region ap-south-1 update-kubeconfig --name capstone"
+                  sh "kubectl apply -f deployment.yml"
+                  sh "kubectl get nodes"
+                  sh "kubectl get deployment"
+                  sh "kubectl get pod -o wide"
+                  sh "kubectl apply -f services.yml"
+                  sh "kubectl get services"
+                    
+                  }
+              }
+         }
     }
 
 }

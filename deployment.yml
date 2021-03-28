@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-nd-capstone
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-nd-capstone
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: devops-nd-capstone
+    spec:
+      containers:
+        - name: devops-nd-capstone
+          image: rahul14m93/devops_capstone_nd
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
