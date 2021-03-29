@@ -1,3 +1,5 @@
+CLUSTER_NAME=devops-nd-captsone
+
 pipeline {
     agent any
     stages {
@@ -27,6 +29,28 @@ pipeline {
 
             
         }
+
+        stage('Kubernetes cluster') {
+			steps {
+				withAWS(region:'ap-south-1', credentials:'eks_access') {
+					sh '''
+						if aws cloudformation describe-stacks --stack-name eksctl-${CLUSTER_NAME}-cluster; then
+							echo 'Stack already exists'
+						else
+							echo 'Stack is being created'
+							eksctl create cluster \                                                                           26% 
+                            --name devops-nd-captsone \
+                            --version 1.19 \
+                            --region ap-south-1 \
+                            --nodegroup-name linux-nodes \
+                            --nodes 2 \
+                            --nodes-min 1 \
+                            --nodes-max 4
+						fi
+					'''
+				}
+			}
+		}
 
          stage('Deploy to AWS Kubernetes Cluster') {
                   steps {
