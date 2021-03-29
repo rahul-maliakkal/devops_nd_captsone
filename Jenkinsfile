@@ -39,7 +39,7 @@ pipeline {
 						else
 							echo 'Stack is being created'
 							eksctl create cluster \
-                            --name devops-nd-captsone \
+                            --name ${CLUSTER_NAME} \
                             --version 1.19 \
                             --region ap-south-1 \
                             --nodegroup-name linux-nodes \
