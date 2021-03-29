@@ -1,7 +1,12 @@
-CLUSTER_NAME=devops-nd-captsone
-
 pipeline {
     agent any
+    environment {
+        AWS_REGION = 'us-west-2'
+        AWS_CREDENTIALS = 'aws-kubernetes'
+        DOCKER_HUB_CREDENTIALS = 'dockerhub_credentials'
+		CLUSTER_NAME = 'devops-nd-captsone'
+    }
+
     stages {
         stage('Build') {
                 steps {
