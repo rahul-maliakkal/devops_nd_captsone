@@ -57,21 +57,27 @@ pipeline {
 			}
 		}
 
-         stage('Deploy to AWS Kubernetes Cluster') {
-                  steps {
-                    withAWS(region:"${AWS_REGION}", credentials:"${AWS_CREDENTIALS}") {
-                        sh '''
-                            aws eks --region ${AWS_REGION} update-kubeconfig --name ${CLUSTER_NAME}
-                            kubectl apply -f deployment.yml
-                            kubectl get nodes
-                            kubectl get deployment
-                            kubectl get pod -o wide
-                            kubectl apply -f services.yml
-                            kubectl get services
-                        '''
-                  }
-              }
-         }
-    }
+        stage('Deploy to AWS Kubernetes Cluster') {
+            steps {
+                withAWS(region:"${AWS_REGION}", credentials:"${AWS_CREDENTIALS}") {
+                    sh '''
+                        aws eks --region ${AWS_REGION} update-kubeconfig --name ${CLUSTER_NAME}
+                        kubectl apply -f deployment.yml
+                        kubectl get nodes
+                        kubectl get deployment
+                        kubectl get pod -o wide
+                        kubectl apply -f services.yml
+                        kubectl get services
+                    '''
+                }
+            }
+        }
 
+        stage("Cleaning up") {
+            steps {
+                    echo 'Cleaning up...'
+                    sh "docker system prune"
+            }
+        }
+    }
 }
