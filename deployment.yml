@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: devops-nd-capstone
-          image: rahul14m93/devops_capstone_nd
+          image: rahul14m93/devops_capstone_nd:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
