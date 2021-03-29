@@ -24,3 +24,20 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-nd-capstone
+  labels:
+    app: devops-nd-capstone
+spec:
+  type: LoadBalancer
+  selector:
+    app: devops-nd-capstone
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000
+      protocol: TCP
