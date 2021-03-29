@@ -4,7 +4,7 @@ pipeline {
         AWS_REGION = 'us-west-2'
         AWS_CREDENTIALS = 'aws-kubernetes'
         DOCKER_HUB_CREDENTIALS = 'dockerhub_credentials'
-		CLUSTER_NAME = 'devops-nd-captsone'
+		CLUSTER_NAME = 'devops-nd-capstone'
     }
 
     stages {
@@ -60,7 +60,7 @@ pipeline {
          stage('Deploy to AWS Kubernetes Cluster') {
                   steps {
                     withAWS(region:'ap-south-1', credentials:'eks_access') {
-                        sh "aws eks --region ap-south-1 update-kubeconfig --name devops-nd-captsone"
+                        sh "aws eks --region ap-south-1 update-kubeconfig --name ${CLUSTER_NAME}"
                         sh "kubectl apply -f deployment.yml"
                         sh "kubectl get nodes"
                         sh "kubectl get deployment"
