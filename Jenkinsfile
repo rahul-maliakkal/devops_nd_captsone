@@ -24,7 +24,7 @@ pipeline {
         {
             steps{
                 sh 'docker build . --tag=rahul14m93/devops_capstone_nd'
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '${DOCKER_HUB_CREDENTIALS}', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${DOCKER_HUB_CREDENTIALS}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
                     sh '''
                         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
                         docker push rahul14m93/devops_capstone_nd:latest
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Kubernetes cluster') {
 			steps {
-				withAWS(region:'${AWS_REGION}', credentials:'${AWS_CREDENTIALS}') {
+				withAWS(region:"${AWS_REGION}", credentials:"${AWS_CREDENTIALS}") {
 					sh '''
 						if aws cloudformation describe-stacks --stack-name eksctl-${CLUSTER_NAME}-cluster; then
 							echo 'Stack already exists'
@@ -59,7 +59,7 @@ pipeline {
 
          stage('Deploy to AWS Kubernetes Cluster') {
                   steps {
-                    withAWS(region:'${AWS_REGION}', credentials:'${AWS_CREDENTIALS}') {
+                    withAWS(region:"${AWS_REGION}", credentials:"${AWS_CREDENTIALS}") {
                         sh '''
                             aws eks --region ${AWS_REGION} update-kubeconfig --name ${CLUSTER_NAME}
                             kubectl apply -f deployment.yml
