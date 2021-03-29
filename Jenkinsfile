@@ -23,7 +23,7 @@ pipeline {
         stage('Build and Upload docker Image')
         {
             steps{
-                sh 'docker build . --tag=rahul14m93/devops_capstone_nd'
+                sh 'docker build -f Dockerfile --tag=rahul14m93/devops_capstone_nd .'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${DOCKER_HUB_CREDENTIALS}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
                     sh '''
                         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
