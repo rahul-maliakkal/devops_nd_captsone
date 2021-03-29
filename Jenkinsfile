@@ -38,7 +38,7 @@ pipeline {
 							echo 'Stack already exists'
 						else
 							echo 'Stack is being created'
-							eksctl create cluster \                                                                           26% 
+							eksctl create cluster \
                             --name devops-nd-captsone \
                             --version 1.19 \
                             --region ap-south-1 \
